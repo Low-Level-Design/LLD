@@ -401,7 +401,6 @@ Here we discuss the alternative ways of implementing some of the existing code t
 
 ![](images/Aspose.Words.c94aa387-2042-4bd0-8d00-028e082b3e23.007.png)
 
-![](images/Aspose.Words.c94aa387-2042-4bd0-8d00-028e082b3e23.008.png)
 
 
 
