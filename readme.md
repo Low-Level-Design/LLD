@@ -1,6 +1,3 @@
-﻿[Public]
-![{"HashCode":-1055977054,"Height":792.0,"Width":612.0,"Placement":"Header","Index":"Primary","Section":1,"Top":0.0,"Left":0.0}](Aspose.Words.c94aa387-2042-4bd0-8d00-028e082b3e23.001.png)
-
 TIC-TAC-TOE
 
 # Requirement Analysis:
@@ -169,9 +166,7 @@ To implement any type of command action, we have implemented a wrapper class cal
 
 **Class Design & Class Diagram:**
 
-![Diagram
-
-Description automatically generated](Aspose.Words.c94aa387-2042-4bd0-8d00-028e082b3e23.004.jpeg)
+![Diagram Description automatically generated](Aspose.Words.c94aa387-2042-4bd0-8d00-028e082b3e23.004.jpeg)
 
 
 
@@ -181,9 +176,7 @@ Description automatically generated](Aspose.Words.c94aa387-2042-4bd0-8d00-028e08
 **Use-Case Diagram:**
 
 
-![Diagram
-
-Description automatically generated](Aspose.Words.c94aa387-2042-4bd0-8d00-028e082b3e23.005.jpeg)
+![Diagram Description automatically generated](Aspose.Words.c94aa387-2042-4bd0-8d00-028e082b3e23.005.jpeg)
 
 
 
@@ -200,9 +193,7 @@ Description automatically generated](Aspose.Words.c94aa387-2042-4bd0-8d00-028e08
 
 **Play Game Activity Diagram:**
 
-`     `**![Diagram
-
-Description automatically generated](Aspose.Words.c94aa387-2042-4bd0-8d00-028e082b3e23.006.jpeg)**
+`     `**![Diagram Description automatically generated](Aspose.Words.c94aa387-2042-4bd0-8d00-028e082b3e23.006.jpeg)**
 
 # Implementing Additional Features:
 
