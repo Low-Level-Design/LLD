@@ -1,3 +1,6 @@
+﻿[Public]
+![{"HashCode":-1055977054,"Height":792.0,"Width":612.0,"Placement":"Header","Index":"Primary","Section":1,"Top":0.0,"Left":0.0}](Aspose.Words.c94aa387-2042-4bd0-8d00-028e082b3e23.001.png)
+
 TIC-TAC-TOE
 
 # Requirement Analysis:
@@ -91,8 +94,12 @@ Details about the game interface, method to ‘build and run’ and object-orien
 
 
 # Tic-Tac-Toe Interface(Implemented):
-`	`![Text Description automatically generated](Aspose.Words.deb23ba5-6915-4a79-81ee-84f838b653c2.002.png)
-# ![Text Description automatically generated](Aspose.Words.deb23ba5-6915-4a79-81ee-84f838b653c2.003.png)
+`	`![Text
+
+Description automatically generated](Aspose.Words.c94aa387-2042-4bd0-8d00-028e082b3e23.002.png)
+# ![Text
+
+Description automatically generated](Aspose.Words.c94aa387-2042-4bd0-8d00-028e082b3e23.003.png)
 #
 # How To Build and Run:
 `	`The code has been written using c++ and compiled using gcc version (8.3.0)
@@ -162,7 +169,9 @@ To implement any type of command action, we have implemented a wrapper class cal
 
 **Class Design & Class Diagram:**
 
-![Diagram Description automatically generated](Aspose.Words.deb23ba5-6915-4a79-81ee-84f838b653c2.004.jpeg)
+![Diagram
+
+Description automatically generated](Aspose.Words.c94aa387-2042-4bd0-8d00-028e082b3e23.004.jpeg)
 
 
 
@@ -172,7 +181,9 @@ To implement any type of command action, we have implemented a wrapper class cal
 **Use-Case Diagram:**
 
 
-![Diagram Description automatically generated](Aspose.Words.deb23ba5-6915-4a79-81ee-84f838b653c2.005.jpeg)
+![Diagram
+
+Description automatically generated](Aspose.Words.c94aa387-2042-4bd0-8d00-028e082b3e23.005.jpeg)
 
 
 
@@ -189,7 +200,9 @@ To implement any type of command action, we have implemented a wrapper class cal
 
 **Play Game Activity Diagram:**
 
-`     `**![Diagram Description automatically generated](Aspose.Words.deb23ba5-6915-4a79-81ee-84f838b653c2.006.jpeg)**
+`     `**![Diagram
+
+Description automatically generated](Aspose.Words.c94aa387-2042-4bd0-8d00-028e082b3e23.006.jpeg)**
 
 # Implementing Additional Features:
 
@@ -399,16 +412,25 @@ Here we discuss the alternative ways of implementing some of the existing code t
   - To implement it in O(n), the most important observation is that the person making the move currently can only win. So, it is enough to check only the corresponding row, col, and diagonal(s) where the move was made. 
   - This algorithm works for any number of players.
 
-  
-   `	`![Text Description automatically generated](ttt_o_1.png)
-   
+Current move
+![](Aspose.Words.c94aa387-2042-4bd0-8d00-028e082b3e23.007.png)
+
+![](Aspose.Words.c94aa387-2042-4bd0-8d00-028e082b3e23.008.png)
+
+
+
+
+
+
+
+
 - O (1) implementation of checkGameStatus:  Implementation of checkGameStatus can be further optimized to work in O (1).
   - This optimization will only work for 2 player game of any board size
   - Algorithm:
     - Define 2 arrays and 2 variables to keep the count of X’s (+1) and O’s (-1). Arrays must be of size ‘boardsize’
       - Rows[boardsize], cols[boardsize], lrDiag, rlDiag.
     - Whenever symbol ‘X’ is placed add 1, else add -1
-    - While placing the symbol ‘X’ at x, y, it will update (+1) for rows[x], cols[y] and increment lrDiag or rlDiag if the co-ordinate (x, y) lies on the diagonals.
+    - While placing the symbol ‘X’ at x, y, it will update (+1) for rows[x], cols[y] and also increment lrDiag or rlDiag if the co-ordinate (x, y) lies on the diagonals.
     - Check for winning condition:
       - After placing symbol at (x, y) if |rows[x]| == boardsize or |cols[y]| == boardsize or |lrDiag| == boardsize or |rlDiag| == boardsize, then this symbol(player) is the winner.
 
