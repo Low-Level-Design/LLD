@@ -399,15 +399,9 @@ Here we discuss the alternative ways of implementing some of the existing code t
   - To implement it in O(n), the most important observation is that the person making the move currently can only win. So, it is enough to check only the corresponding row, col, and diagonal(s) where the move was made. 
   - This algorithm works for any number of players.
 
-Current move
 ![](images/Aspose.Words.c94aa387-2042-4bd0-8d00-028e082b3e23.007.png)
 
 ![](images/Aspose.Words.c94aa387-2042-4bd0-8d00-028e082b3e23.008.png)
-
-
-
-
-
 
 
 
