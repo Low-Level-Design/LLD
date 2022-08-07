@@ -1,6 +1,3 @@
-﻿[Public]
-![{"HashCode":-1055977054,"Height":792.0,"Width":612.0,"Placement":"Header","Index":"Primary","Section":1,"Top":0.0,"Left":0.0}](Aspose.Words.deb23ba5-6915-4a79-81ee-84f838b653c2.001.png)
-
 TIC-TAC-TOE
 
 # Requirement Analysis:
