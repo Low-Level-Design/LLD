@@ -91,12 +91,8 @@ Details about the game interface, method to ‘build and run’ and object-orien
 
 
 # Tic-Tac-Toe Interface(Implemented):
-`	`![Text
-
-Description automatically generated](Aspose.Words.c94aa387-2042-4bd0-8d00-028e082b3e23.002.png)
-# ![Text
-
-Description automatically generated](Aspose.Words.c94aa387-2042-4bd0-8d00-028e082b3e23.003.png)
+`	`![Text Description automatically generated](Aspose.Words.c94aa387-2042-4bd0-8d00-028e082b3e23.002.png)
+# ![Text Description automatically generated](Aspose.Words.c94aa387-2042-4bd0-8d00-028e082b3e23.003.png)
 #
 # How To Build and Run:
 `	`The code has been written using c++ and compiled using gcc version (8.3.0)
