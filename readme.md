@@ -91,9 +91,7 @@ Details about the game interface, method to ‘build and run’ and object-orien
 
 
 # Tic-Tac-Toe Interface(Implemented):
-`	`![Text
-
-Description automatically generated](Aspose.Words.deb23ba5-6915-4a79-81ee-84f838b653c2.002.png)
+`	`![Text Description automatically generated](Aspose.Words.deb23ba5-6915-4a79-81ee-84f838b653c2.002.png)
 # ![Text
 
 Description automatically generated](Aspose.Words.deb23ba5-6915-4a79-81ee-84f838b653c2.003.png)
