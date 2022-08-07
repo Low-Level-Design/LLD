@@ -399,18 +399,6 @@ Here we discuss the alternative ways of implementing some of the existing code t
   - To implement it in O(n), the most important observation is that the person making the move currently can only win. So, it is enough to check only the corresponding row, col, and diagonal(s) where the move was made. 
   - This algorithm works for any number of players.
 
-![](Aspose.Words.deb23ba5-6915-4a79-81ee-84f838b653c2.007.png)
-
-Current move
-
-![](Aspose.Words.deb23ba5-6915-4a79-81ee-84f838b653c2.008.png)![](Aspose.Words.deb23ba5-6915-4a79-81ee-84f838b653c2.009.png)![](Aspose.Words.deb23ba5-6915-4a79-81ee-84f838b653c2.010.png)![](Aspose.Words.deb23ba5-6915-4a79-81ee-84f838b653c2.011.png)![](Aspose.Words.deb23ba5-6915-4a79-81ee-84f838b653c2.012.png)
-
-
-
-
-
-
-
 
 - O (1) implementation of checkGameStatus:  Implementation of checkGameStatus can be further optimized to work in O (1).
   - This optimization will only work for 2 player game of any board size
