@@ -92,9 +92,7 @@ Details about the game interface, method to ‘build and run’ and object-orien
 
 # Tic-Tac-Toe Interface(Implemented):
 `	`![Text Description automatically generated](Aspose.Words.deb23ba5-6915-4a79-81ee-84f838b653c2.002.png)
-# ![Text
-
-Description automatically generated](Aspose.Words.deb23ba5-6915-4a79-81ee-84f838b653c2.003.png)
+# ![Text Description automatically generated](Aspose.Words.deb23ba5-6915-4a79-81ee-84f838b653c2.003.png)
 #
 # How To Build and Run:
 `	`The code has been written using c++ and compiled using gcc version (8.3.0)
@@ -164,9 +162,7 @@ To implement any type of command action, we have implemented a wrapper class cal
 
 **Class Design & Class Diagram:**
 
-![Diagram
-
-Description automatically generated](Aspose.Words.deb23ba5-6915-4a79-81ee-84f838b653c2.004.jpeg)
+![Diagram Description automatically generated](Aspose.Words.deb23ba5-6915-4a79-81ee-84f838b653c2.004.jpeg)
 
 
 
@@ -176,9 +172,7 @@ Description automatically generated](Aspose.Words.deb23ba5-6915-4a79-81ee-84f838
 **Use-Case Diagram:**
 
 
-![Diagram
-
-Description automatically generated](Aspose.Words.deb23ba5-6915-4a79-81ee-84f838b653c2.005.jpeg)
+![Diagram Description automatically generated](Aspose.Words.deb23ba5-6915-4a79-81ee-84f838b653c2.005.jpeg)
 
 
 
@@ -195,9 +189,7 @@ Description automatically generated](Aspose.Words.deb23ba5-6915-4a79-81ee-84f838
 
 **Play Game Activity Diagram:**
 
-`     `**![Diagram
-
-Description automatically generated](Aspose.Words.deb23ba5-6915-4a79-81ee-84f838b653c2.006.jpeg)**
+`     `**![Diagram Description automatically generated](Aspose.Words.deb23ba5-6915-4a79-81ee-84f838b653c2.006.jpeg)**
 
 # Implementing Additional Features:
 
