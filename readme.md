@@ -91,8 +91,8 @@ Details about the game interface, method to ‘build and run’ and object-orien
 
 
 # Tic-Tac-Toe Interface(Implemented):
-`	`![Text Description automatically generated](Aspose.Words.c94aa387-2042-4bd0-8d00-028e082b3e23.002.png)
-# ![Text Description automatically generated](Aspose.Words.c94aa387-2042-4bd0-8d00-028e082b3e23.003.png)
+`	`![Text Description automatically generated](images/Aspose.Words.c94aa387-2042-4bd0-8d00-028e082b3e23.002.png)
+# ![Text Description automatically generated](images/Aspose.Words.c94aa387-2042-4bd0-8d00-028e082b3e23.003.png)
 #
 # How To Build and Run:
 `	`The code has been written using c++ and compiled using gcc version (8.3.0)
@@ -162,7 +162,7 @@ To implement any type of command action, we have implemented a wrapper class cal
 
 **Class Design & Class Diagram:**
 
-![Diagram Description automatically generated](Aspose.Words.c94aa387-2042-4bd0-8d00-028e082b3e23.004.jpeg)
+![Diagram Description automatically generated](images/Aspose.Words.c94aa387-2042-4bd0-8d00-028e082b3e23.004.jpeg)
 
 
 
@@ -172,7 +172,7 @@ To implement any type of command action, we have implemented a wrapper class cal
 **Use-Case Diagram:**
 
 
-![Diagram Description automatically generated](Aspose.Words.c94aa387-2042-4bd0-8d00-028e082b3e23.005.jpeg)
+![Diagram Description automatically generated](images/Aspose.Words.c94aa387-2042-4bd0-8d00-028e082b3e23.005.jpeg)
 
 
 
@@ -189,7 +189,7 @@ To implement any type of command action, we have implemented a wrapper class cal
 
 **Play Game Activity Diagram:**
 
-`     `**![Diagram Description automatically generated](Aspose.Words.c94aa387-2042-4bd0-8d00-028e082b3e23.006.jpeg)**
+`     `**![Diagram Description automatically generated](images/Aspose.Words.c94aa387-2042-4bd0-8d00-028e082b3e23.006.jpeg)**
 
 # Implementing Additional Features:
 
@@ -400,9 +400,9 @@ Here we discuss the alternative ways of implementing some of the existing code t
   - This algorithm works for any number of players.
 
 Current move
-![](Aspose.Words.c94aa387-2042-4bd0-8d00-028e082b3e23.007.png)
+![](images/Aspose.Words.c94aa387-2042-4bd0-8d00-028e082b3e23.007.png)
 
-![](Aspose.Words.c94aa387-2042-4bd0-8d00-028e082b3e23.008.png)
+![](images/Aspose.Words.c94aa387-2042-4bd0-8d00-028e082b3e23.008.png)
 
 
 
