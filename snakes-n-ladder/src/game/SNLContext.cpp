@@ -125,6 +125,7 @@ bool SNLContext::startGame()
     m_snlGame->printPlayersPosition(); // Shabnam : 7,4
     
     //Ninad's Turn : Please roll the dice
+    //currPlayer was removed from the front of the queue
     Player currPlayer = m_snlGame->displayPlayerTurn(); 
      
     m_snlGame->promptUser(); // game# > roll_dice
@@ -139,27 +140,28 @@ bool SNLContext::startGame()
     //roll the dice
     cmd->execute();
 
-    //quit game command
-      
-      //move and checkGameStatus -> either same player turn, or game over or next
-      //Move is possible: Then move and checkGameStatus: (remember the move)
-      // a.	If it was a six?
-      // Go to 2b
-      //                                                         b. go next
+    //move after the dice has been rolled
 
-      // b.	If it’s a game over?
-      //       Break and display this game stats. It also updates the global 
-      //       rank order to make it visible in print_stats. 
-      // Else
-      //       Go to next step
-                                              
-      // j.	Go to next step
-      // d.	 
-      // 3.	Continue the loop for the next player’s turn
+    bool willSamePlayerPlay = false;
+    isGameOver = m_snlGame->moveAndCheck(willSamePlayerPlay, currPlayer);
 
+    if (willSamePlayerPlay && !isGameOver) {
+      m_snlGame->addPlayerAtFront(currPlayer);
+      continue;
+    }
 
+    if (isGameOver) {
+      //display the results
+      //Break and display this game stats. It also updates the global 
+      //rank order to make it visible in print_stats. 
+      cout << "Game is over" << endl;
+      break;
+    } else {
+      m_snlGame->addPlayer(currPlayer);
+    }
 
   }
+
   return true;
   
 }

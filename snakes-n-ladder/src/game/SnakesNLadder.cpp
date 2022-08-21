@@ -354,7 +354,7 @@ void SNLGame::printPlayersPosition() const
 
 void SNLGame::promptUser() const
 {
-    cout << endl << "game# >";
+    cout << endl << "game#>";
 }
 
 void SNLGame::rollDice()
@@ -368,6 +368,80 @@ Player SNLGame::displayPlayerTurn()
     cout << endl << currPlayer.getName() 
          << " 's Turn | Please roll the dice." <<endl; 
     return currPlayer;
+}
+
+bool SNLGame::move(Player &currPlayer, int rollValue)
+{
+    pair<int, int> currPos = currPlayer.getPosition();
+
+    int boardSize = m_gameBoard.getBoardSize();
+
+    int yDelta = currPos.second + rollValue;
+
+    int finalX = currPos.first + (yDelta/boardSize);
+    int finalY = (yDelta%boardSize);
+
+    pair<int, int> finalPos = {finalX, finalY};
+
+    if (finalPos.first > boardSize - 1|| finalPos.second > boardSize - 1) {
+        cout << "Moves not possible for " <<currPlayer.getName() << endl;
+        return false;
+    }
+
+    //check if the final position has jumper
+    while (m_gameBoard.hasJumperAt(finalPos)) {
+        
+        shared_ptr<Jumper> Jumper = m_gameBoard.getJumperAt(finalPos);
+
+        cout << "Encountered " << Jumper->getJumperType() << " at "
+             << "( " << finalPos.first << ", " << finalPos.second << endl;
+
+        pair<int, int> endOfJumper = Jumper->getEnd();
+        
+        int newFinalX = endOfJumper.first;
+        int newFinalY = endOfJumper.second;
+        
+        if (newFinalX > boardSize || newFinalY > boardSize) {
+            
+            break;
+        } 
+        
+        finalPos = {newFinalX, newFinalY};
+
+    }
+    
+    // if (finalPos.first > boardSize || finalPos.second > boardSize) {
+    //     return false;
+    // }
+
+    currPlayer.setPosition(finalPos);
+    return true;
+}
+
+bool SNLGame::checkGameStatus(Player &player) 
+{
+    int boardSize = m_gameBoard.getBoardSize();
+    if ((player.getPosition().first == boardSize - 1) && 
+            (player.getPosition().second == boardSize - 1)) 
+    {
+        return true;
+    }
+    return false;
+}
+
+bool SNLGame::moveAndCheck( bool &willSamePlayerPlayAgain, Player &currPlayer)
+{
+    int rollValue = m_dice.getCurrRollValue();
+    willSamePlayerPlayAgain = m_dice.getIsRollMaxValue();
+
+    bool isMovePossible = move(currPlayer, rollValue); 
+    if (!isMovePossible) {
+        //game continues with the next player
+        return false; 
+    } 
+
+    return checkGameStatus(currPlayer);
+
 }
 
 

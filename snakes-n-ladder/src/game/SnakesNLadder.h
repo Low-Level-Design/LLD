@@ -131,6 +131,11 @@ public:
     {
         m_end = end;
     }
+
+    virtual string getJumperType() const
+    {
+        return "Void";
+    }
 private:
     pair<int, int> m_start;
     pair<int, int> m_end;
@@ -142,6 +147,12 @@ class Snake: public Jumper
 public:
     explicit Snake(const pair<int, int> &start, const pair<int, int> &end)
     :Jumper(start, end) {}
+
+    
+    string getJumperType() const override
+    {
+        return "Snake";
+    }
 };
 
 class Ladder: public Jumper
@@ -149,6 +160,11 @@ class Ladder: public Jumper
 public:
     explicit Ladder(const pair<int, int> &start, const pair<int, int> &end)
     :Jumper(start, end) {}
+
+    string getJumperType() const override
+    {
+        return "Ladder";
+    }
 };
 
 
@@ -176,6 +192,23 @@ public:
         return m_playerIds;
     }
 
+    bool hasJumper(const pair<int, int> &pos) const
+    {
+        return (m_ladder || m_snake);
+
+    }
+    
+    shared_ptr<Jumper> getJumper() const
+    {
+        if (m_snake) {
+            return m_snake;
+        }
+
+        if (m_ladder) {
+            return m_ladder;
+        }
+        return nullptr;
+    }
     //setters
     void addSnake(shared_ptr<Snake> &snake) 
     {
@@ -223,6 +256,16 @@ public:
         m_boardSize = m_boardSize;
     }
 
+    bool hasJumperAt(const pair<int, int> &pos)
+    {
+        return m_board[pos.first][pos.second].hasJumper(pos);
+    }
+
+    shared_ptr<Jumper> getJumperAt(const pair<int, int> &pos)
+    {
+        return m_board[pos.first][pos.second].getJumper();
+    }
+
 private:
     void generateSnakes(int noOfSnakes, 
                 vector <shared_ptr<Snake>> &snakes, 
@@ -261,6 +304,16 @@ public:
     {
         m_maxValue = m_maxValue;
     };
+
+    const int getCurrRollValue() const 
+    {
+        return m_currRollValue;
+    }
+
+    bool getIsRollMaxValue() const
+    {
+        return (m_currRollValue == m_maxValue);
+    }
 };
 
 /************************************************************
@@ -308,6 +361,11 @@ public:
 
     }
 
+    void addPlayerAtFront(const Player &pl) 
+    {
+        m_players.push_front(pl);
+    }
+
     void addDice(const Dice &dice)
     {
         m_dice = dice;
@@ -318,6 +376,9 @@ public:
     void promptUser() const;
 
     void rollDice();
+    bool moveAndCheck( bool &willSamePlayerPlayAgain, Player &currPlayer);
+    bool move(Player &currPlayer, int rollValue);
+    bool checkGameStatus(Player &player);
 
 
 private:
