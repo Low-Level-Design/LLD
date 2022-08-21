@@ -31,6 +31,7 @@ public:
   bool startGame();
   bool printStats() const;
   bool storeGameSettings();
+  bool rollDice();
 
 private:
   shared_ptr<SNLGame> m_snlGame; /**< Reference to snlGame object. */

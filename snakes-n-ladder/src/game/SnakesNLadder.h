@@ -15,7 +15,10 @@
 #include <vector>
 #include <unordered_map>
 #include <queue>
+#include <memory>
+#include <unordered_set>
 using namespace std;
+
 class PlayerStat;
 class Statistics;
 
@@ -85,6 +88,8 @@ public:
         cout << "Player Piece: " <<m_id << endl;
     }
 
+    void printPosition() const;
+
 private:
     int m_id; 
     string m_name;
@@ -101,7 +106,8 @@ private:
 class Jumper
 {
     
-    explicit Jumper();
+public:
+    explicit Jumper(const pair<int, int> &start, const pair<int, int> &end);
     ~Jumper();
     //getters
     const pair<int, int> getStart() const 
@@ -111,7 +117,7 @@ class Jumper
 
     const pair<int, int> getEnd() const 
     {
-        return m_start;
+        return m_end;
     }
 
     //setters
@@ -132,10 +138,17 @@ private:
 
 class Snake: public Jumper
 {
+
+public:
+    explicit Snake(const pair<int, int> &start, const pair<int, int> &end)
+    :Jumper(start, end) {}
 };
 
 class Ladder: public Jumper
 {
+public:
+    explicit Ladder(const pair<int, int> &start, const pair<int, int> &end)
+    :Jumper(start, end) {}
 };
 
 
@@ -148,12 +161,12 @@ public:
     ~Cell();
 
     //getters
-    const Snake *getSnake() const 
+    const shared_ptr<Snake> getSnake() const 
     {
         return m_snake;
     }
 
-    const Ladder *getLadder() const 
+    const shared_ptr<Ladder> getLadder() const 
     {
         return m_ladder;
     }
@@ -164,12 +177,12 @@ public:
     }
 
     //setters
-    void addSnake(Snake *snake) 
+    void addSnake(shared_ptr<Snake> &snake) 
     {
         m_snake =  snake;
     }
 
-    void addLadder(Ladder *ladder) 
+    void addLadder(shared_ptr<Ladder> &ladder) 
     {
         m_ladder =  ladder;
     } 
@@ -180,8 +193,8 @@ public:
     } 
 
 private:
-    Snake *m_snake;
-    Ladder *m_ladder;
+    shared_ptr<Snake> m_snake; 
+    shared_ptr<Ladder> m_ladder;
 
     vector<int>  m_playerIds;
 
@@ -209,6 +222,18 @@ public:
     {
         m_boardSize = m_boardSize;
     }
+
+private:
+    void generateSnakes(int noOfSnakes, 
+                vector <shared_ptr<Snake>> &snakes, 
+                unordered_set<string> &snakeStarts,
+                unordered_set<string> &snakeTails);
+    void generateLadders(int noOfLadders, 
+                unordered_set<string> &snakeStarts,
+                unordered_set<string> &snakeTails,
+                vector <shared_ptr<Ladder>> &ladders, 
+                unordered_set<string> &ladderStarts);
+                
 };
 
 /************************************************************
@@ -220,6 +245,7 @@ class Dice
 
 private:
     int m_maxValue;
+    int m_currRollValue;
 
 public:
     explicit Dice(int diceSize);
@@ -228,6 +254,8 @@ public:
         return m_maxValue;
     }
 
+    void rollDice();
+    
 
     void setMaxValue(int m_maxValue)
     {
@@ -250,15 +278,15 @@ public:
 
     //getters
 
-    queue<Player> getPlayers() const
+    deque<Player> getPlayers() const
     {
         return m_players;
     }
 
-    Player getPlayer()
+    Player getCurrentPlayer()
     {
         Player frontPlayer = m_players.front();
-        m_players.pop();
+        m_players.pop_front();
         return frontPlayer;
     }
 
@@ -276,7 +304,7 @@ public:
 
     void addPlayer(const Player& pl) 
     {
-        m_players.push(pl);
+        m_players.push_back(pl);
 
     }
 
@@ -285,10 +313,16 @@ public:
         m_dice = dice;
     }
 
+    void printPlayersPosition() const;
+    Player displayPlayerTurn();
+    void promptUser() const;
+
+    void rollDice();
+
 
 private:
 
-    queue<Player>  m_players;
+    deque<Player>  m_players;
     GameBoard      m_gameBoard;
     Dice           m_dice;
     Statistics     *m_stats;

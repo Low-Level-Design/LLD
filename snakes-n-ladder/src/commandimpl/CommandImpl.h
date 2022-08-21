@@ -113,6 +113,19 @@ public:
   bool execute() override;
 };
 
+/**
+ * @brief Implements the 'roll_dice' command of a snakes-n-ladder game.
+ * 
+ */
+
+class RollDiceCommand : public CommandImpl
+{
+
+public:
+  explicit RollDiceCommand(SNLContext &snlContext);
+  ~RollDiceCommand();
+  bool execute() override;
+};
 
 /**
  * @brief Implements the factory method class for the command hierarchy.
@@ -136,6 +149,7 @@ public:
   shared_ptr<CommandImpl> makeStartGameCommand(const string &param);
   shared_ptr<CommandImpl> makePrintStatsCommand(const string &param);
   shared_ptr<CommandImpl> makeGameSettingsCommand(const string &param);
+  shared_ptr<CommandImpl> makeRollDiceCommand(const string &param);
 
 private:
   typedef shared_ptr<CommandImpl> (CommandFactory::*FACTORY_PTMF)(

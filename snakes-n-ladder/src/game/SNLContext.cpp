@@ -12,6 +12,7 @@
 
 #include "SNLContext.h"
 #include "SnakesNLadder.h"
+#include "../commandimpl/CommandImpl.h"
 #include <iostream>
 #include <sstream>
 #include <memory>
@@ -56,8 +57,7 @@ bool SNLContext::registerPlayers()
 
 
   if (m_snlGame == nullptr) {
-    m_snlGame = std::make_shared<SNLGame>(diceSize, boardSize, noOfSnakes,
-                                  noOfLadders);
+    //Game exception
   
   } else {
 
@@ -70,7 +70,7 @@ bool SNLContext::registerPlayers()
 
   }
 
-  
+
   int noOfAllowedPlayers = settings->getNoOfPlayers();
   // Make sure that the settings are initialized before this
   // TODO : handle error to ensure settings are initiliazed first 
@@ -87,6 +87,8 @@ bool SNLContext::registerPlayers()
 
     Player pl(playerName);
     m_snlGame->addPlayer(pl);
+
+    //TODO : add Players to the cell
     
     cout << endl <<"Player registered successfully:" <<endl;
     pl.display();
@@ -95,6 +97,13 @@ bool SNLContext::registerPlayers()
   }
 
   return true;
+}
+
+bool SNLContext::rollDice()
+{
+  m_snlGame->rollDice();
+  return true;
+  
 }
 
 /**
@@ -107,8 +116,52 @@ bool SNLContext::registerPlayers()
  */
 bool SNLContext::startGame()
 {
-  cout << "Game started" << endl;  
+  bool isGameOver = false;
+  CommandFactory cmdFactory(*this);
+  while (!isGameOver) {
+    m_snlGame->promptUser(); // game# >
+    
+    //show the board /player's position
+    m_snlGame->printPlayersPosition(); // Shabnam : 7,4
+    
+    //Ninad's Turn : Please roll the dice
+    Player currPlayer = m_snlGame->displayPlayerTurn(); 
+     
+    m_snlGame->promptUser(); // game# > roll_dice
+    
+    //take the input
+
+    string inputStr;
+    getline(cin, inputStr);
+
+    shared_ptr<CommandImpl> cmd = cmdFactory.makeCommand(inputStr);
+    
+    //roll the dice
+    cmd->execute();
+
+    //quit game command
+      
+      //move and checkGameStatus -> either same player turn, or game over or next
+      //Move is possible: Then move and checkGameStatus: (remember the move)
+      // a.	If it was a six?
+      // Go to 2b
+      //                                                         b. go next
+
+      // b.	If it’s a game over?
+      //       Break and display this game stats. It also updates the global 
+      //       rank order to make it visible in print_stats. 
+      // Else
+      //       Go to next step
+                                              
+      // j.	Go to next step
+      // d.	 
+      // 3.	Continue the loop for the next player’s turn
+
+
+
+  }
   return true;
+  
 }
 
 /**
@@ -141,6 +194,9 @@ bool SNLContext::storeGameSettings()
   cout << "Enter dice size >";
   getline(cin, diceSize);
 
+  //TODO :  make sure that the no of snakes and ladders are
+  // less than or equal the (board size) /2 
+
   string noOfSnakes;
   cout << "Enter number of snakes >";
   getline(cin, noOfSnakes);
@@ -151,6 +207,7 @@ bool SNLContext::storeGameSettings()
 
   cout << endl;
 
+  
   //register the settings
   settings->setNoOfPlayers(stoi(noOfPlayers));
   settings->setBoardSize(stoi(boardSize));
@@ -159,6 +216,13 @@ bool SNLContext::storeGameSettings()
   settings->setNoOfSnakes(stoi(noOfSnakes));
 
   cout << "Game settings registered successfully" << endl;
+
+  if (m_snlGame == nullptr) {
+    m_snlGame = std::make_shared<SNLGame>(stoi(boardSize), stoi(diceSize), 
+                      stoi(noOfSnakes), stoi(noOfLadders));
+  }
+
+  cout << "Game initialization done!" << endl;
 
   return true;
 }

@@ -48,6 +48,8 @@ shared_ptr<CommandImpl> CommandFactory::makeCommand(const string &commandStr)
     createStr = commandStr;
   } else if (commandStr == "game_settings") {
     createStr = commandStr;
+  } else if (commandStr == "roll_dice") {
+    createStr = commandStr;
   } else {
     throw CommandImpl::InvalidCommandException(commandStr);
   }
@@ -62,6 +64,8 @@ shared_ptr<CommandImpl> CommandFactory::makeCommand(const string &commandStr)
   } else if (createStr == "print_stats") {
       param =  "";
   } else if (createStr == "game_settings") {
+      param =  "";
+  } else if (createStr == "roll_dice") {
       param =  "";
   } else {
     //raise exception
@@ -95,6 +99,7 @@ CommandFactory::CommandFactory(SNLContext &gc) :
   m_commandMap["start_game"] = &CommandFactory::makeStartGameCommand;
   m_commandMap["print_stats"] = &CommandFactory::makePrintStatsCommand;
   m_commandMap["game_settings"] = &CommandFactory::makeGameSettingsCommand;
+  m_commandMap["roll_dice"] = &CommandFactory::makeRollDiceCommand;
 }
 
 CommandFactory::~CommandFactory() = default;
@@ -106,6 +111,11 @@ CommandFactory::~CommandFactory() = default;
  * @return shared_ptr<CommandImpl> Returns the created QuitCommand shared
  *                                 pointer.
  */
+
+shared_ptr<CommandImpl> CommandFactory::makeRollDiceCommand(const string &str)
+{
+  return shared_ptr<CommandImpl>(new RollDiceCommand(m_snlContext));
+}
 
 shared_ptr<CommandImpl> CommandFactory::makeQuitCommand(const string &str)
 {
@@ -229,6 +239,31 @@ QuitCommand::~QuitCommand() = default;
 bool QuitCommand::execute()
 {
   return false;
+}
+
+
+/**
+ * @brief Construct a new Roll Dice Command:: Roll DIce Command object.
+ * 
+ * @param tttContext Empty game context object.
+ */
+RollDiceCommand::RollDiceCommand(SNLContext &snlContext)
+    :CommandImpl(snlContext)
+{
+}
+
+RollDiceCommand::~RollDiceCommand() = default;
+
+/**
+ * @brief  Implements how roll dice command should be executed.
+ * 
+ * @return true 
+ * @return false 
+ */
+
+bool RollDiceCommand::execute()
+{
+  return m_snlContext.rollDice();
 }
 
 /**
