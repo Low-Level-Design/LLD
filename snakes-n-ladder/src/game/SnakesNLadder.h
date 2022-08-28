@@ -17,25 +17,44 @@
 #include <queue>
 #include <memory>
 #include <unordered_set>
+#include <map>
+#include <utility>
+#include <algorithm>
+
 using namespace std;
 
-class PlayerStat;
+class PlayerStats;
 class Statistics;
 
 /************************************************************
  *  Game Statistics
  *************************************************************/
 
-class PlayerStat
+class PlayerStats
 {
 
 public:
-    explicit PlayerStat();
-    ~PlayerStat();
+    explicit PlayerStats();
+    ~PlayerStats();
 
     void updateScore(int score) 
     {
         m_score += score;
+    }
+
+    void addScore(int score)
+    {
+        m_score = score;
+    }
+
+    const int getScore() const 
+    {
+        return m_score;
+    }
+
+    void reset()
+    {
+        m_score = 0;
     }
 
 private:
@@ -81,6 +100,16 @@ public:
         m_position = position;
     }
 
+    void addScore(int score) 
+    {
+        m_PlayerStats.addScore(score);
+    }
+
+    const int getScore() const
+    {
+        return m_PlayerStats.getScore();
+    }
+
     void display() const 
     {
         cout << "Player Id: " << m_id << endl;
@@ -90,11 +119,18 @@ public:
 
     void printPosition() const;
 
+    void reset() 
+    {
+        m_PlayerStats.reset();
+        m_position.first = 0;
+        m_position.second = 0;
+    }
+
 private:
     int m_id; 
     string m_name;
     pair<int, int> m_position;
-    PlayerStat m_playerStat;
+    PlayerStats m_PlayerStats;
     static int  m_idGenerator; 
 
 };
@@ -266,6 +302,8 @@ public:
         return m_board[pos.first][pos.second].getJumper();
     }
 
+    
+
 private:
     void generateSnakes(int noOfSnakes, 
                 vector <shared_ptr<Snake>> &snakes, 
@@ -314,6 +352,13 @@ public:
     {
         return (m_currRollValue == m_maxValue);
     }
+
+    void reset() 
+    {
+        
+        m_currRollValue = 0;
+
+    }
 };
 
 /************************************************************
@@ -353,6 +398,8 @@ public:
 
     }
 
+    void printStats() const;
+
     //setters
 
     void addPlayer(const Player& pl) 
@@ -361,6 +408,8 @@ public:
 
     }
 
+    void addPlayerForStats(const Player &pl);
+    
     void addPlayerAtFront(const Player &pl) 
     {
         m_players.push_front(pl);
@@ -371,6 +420,8 @@ public:
         m_dice = dice;
     }
 
+    void updateStats(const Player &pl);
+
     void printPlayersPosition() const;
     Player displayPlayerTurn();
     void promptUser() const;
@@ -379,6 +430,8 @@ public:
     bool moveAndCheck( bool &willSamePlayerPlayAgain, Player &currPlayer);
     bool move(Player &currPlayer, int rollValue);
     bool checkGameStatus(Player &player);
+    void updateResultAndPrint(Player &player);
+    void resetGame();
 
 
 private:
@@ -386,24 +439,80 @@ private:
     deque<Player>  m_players;
     GameBoard      m_gameBoard;
     Dice           m_dice;
-    Statistics     *m_stats;
-    
-
-    //sorted result of game
-    vector<pair<int, Player>>  m_result; 
-
+    shared_ptr<Statistics>  m_stats;
+   
 };
+
+
+
 
 class Statistics
 {
-public:
-    explicit Statistics();
-private:
-    vector<Player> m_playersRank;
-    bool m_hasChanged;
-    //update
-    
 
+public:
+
+       
+    explicit Statistics();
+    void registerPlayer(const Player &pl); 
+   
+    void setHasChanged() 
+    {
+        m_hasChanged = true;
+    }
+
+    void updateScore(const Player &pl)
+    {
+        string name = pl.getName();
+        int score = pl.getScore();
+        m_playersRank[name] += score;
+    }
+
+    void reset()
+    {
+        
+        m_hasChanged = true;
+    }
+
+    void printStats() 
+    {
+        //print the sorted ranked players
+
+        cout << "Players' Score" <<endl;
+        cout << "--------------" <<endl;
+        if (!m_hasChanged) {
+            for (pair<int, string> plScore : m_rankedPlayerList) {
+                cout << plScore.second << " : " << plScore.first <<endl;
+            }
+        } else {
+            // //clear the vector m_rankedPlayerList
+            m_rankedPlayerList.clear();
+
+            // //create the vector from the unordered_map
+            for (auto it = m_playersRank.begin(); it != m_playersRank.end();
+                            ++it) {
+                pair<int, string> pl = make_pair(it->second, it->first);
+                m_rankedPlayerList.emplace_back(pl);
+
+            }
+
+            sort(m_rankedPlayerList.begin(), m_rankedPlayerList.end()); 
+                                   
+
+            for (pair<int, string> plScore : m_rankedPlayerList) {
+                cout << plScore.second << " : " << plScore.first <<endl;
+            }
+            m_hasChanged = false;
+          
+        }
+    
+    }
+
+
+private:
+    unordered_map <string, int> m_playersRank;
+    vector < pair<int, string> >  m_rankedPlayerList;
+    bool m_hasChanged;
+ 
 };
 
 /************************************************************

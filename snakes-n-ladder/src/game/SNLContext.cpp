@@ -87,6 +87,7 @@ bool SNLContext::registerPlayers()
 
     Player pl(playerName);
     m_snlGame->addPlayer(pl);
+    m_snlGame->addPlayerForStats(pl);
 
     //TODO : add Players to the cell
     
@@ -118,6 +119,8 @@ bool SNLContext::startGame()
 {
   bool isGameOver = false;
   CommandFactory cmdFactory(*this);
+  
+  //implement quit here
   while (!isGameOver) {
     m_snlGame->promptUser(); // game# >
     
@@ -154,7 +157,11 @@ bool SNLContext::startGame()
       //display the results
       //Break and display this game stats. It also updates the global 
       //rank order to make it visible in print_stats. 
-      cout << "Game is over" << endl;
+      //currPlayer is the winner
+      //cout << "Game is over" << endl;
+      m_snlGame->addPlayer(currPlayer);
+      m_snlGame->updateResultAndPrint(currPlayer);
+      m_snlGame->resetGame();
       break;
     } else {
       m_snlGame->addPlayer(currPlayer);
@@ -242,7 +249,7 @@ bool SNLContext::storeGameSettings()
 
 bool SNLContext::printStats() const
 {
-  cout << "Print Stats" << endl;
+  m_snlGame->printStats();
   return true;
 }
 

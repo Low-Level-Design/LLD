@@ -21,7 +21,7 @@ class Reactor;
  * @brief Construct a new Event Handler:: Event Handler object.
  * 
  */
-EventHandler::EventHandler() : m_snlContext(), m_commandFactory(m_snlContext)
+EventHandler::EventHandler() : m_chessControl(), m_commandFactory(m_chessControl)
 {
   m_isUserPrompted = false;
 }
@@ -48,6 +48,7 @@ void EventHandler::handleInput(Reactor *reactor)
     reactor->endEventLoop();
     return;    
   }
+  
   shared_ptr<CommandImpl> command = nullptr;
   try {
 
@@ -70,8 +71,8 @@ void EventHandler::handleInput(Reactor *reactor)
   //   cout << "\n[Error] "<< ge.what() << endl;
   //   cout << endl;
   //   command->printValidCommands();
-  // } 
-  }catch(...)  {
+  // 
+  } catch(...)  {
     cout << "\n[Error] Something went wrong. Please try again!" <<endl;
     cout << endl;
   }
@@ -79,7 +80,7 @@ void EventHandler::handleInput(Reactor *reactor)
 }
 
 /**
- * @brief Prompts the supported command prompt & snakes-n-ladder prompt 
+ * @brief Prompts the supported command prompt & tic-tac-toe prompt 
  *        to the user.
  * 
  */
@@ -89,15 +90,14 @@ void EventHandler::promptUser()
   if (!m_isUserPrompted) {
     cout << "Commands:" <<endl; 
     cout << endl;
-    cout << "game_settings    : to register game settings." << endl;
     cout << "register_players : to register all players." << endl;
     cout << "start_game       : to start a new game." << endl;  
-    cout << "print_stats      : to print game stats." << endl; 
     cout << "quit             : to quit this session." << endl;  
+    cout << "print_stats      : to print game stats." << endl;  
     cout << endl;
     m_isUserPrompted = true;
   }
-  cout << "snakes-n-ladder > "; 
+  cout << "chess > "; 
   
 }
 

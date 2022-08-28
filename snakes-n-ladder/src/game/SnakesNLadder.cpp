@@ -15,10 +15,11 @@
 #include <vector>
 #include <iostream>
 #include <memory>
+#include <algorithm>
 
 
 using namespace std;
-PlayerStat::~PlayerStat() = default;
+PlayerStats::~PlayerStats() = default;
 
 GameSettings* GameSettings::m_instance = nullptr;
 GameSettings* GameSettings::getInstance()
@@ -43,8 +44,8 @@ GameSettings::GameSettings()
 
 int Player::m_idGenerator = 0;
 
-PlayerStat::PlayerStat() {}
-Player::Player(const string &name) : m_playerStat(){
+PlayerStats::PlayerStats() {}
+Player::Player(const string &name) : m_PlayerStats(){
     m_id = m_idGenerator++;
     m_name = name;
     m_position = {0, 0};
@@ -88,6 +89,14 @@ Cell::~Cell() = default;
 Statistics::Statistics() 
 {
     m_hasChanged = true;
+    
+}
+
+void Statistics::registerPlayer(const Player &pl)
+{
+    string name = pl.getName();
+    m_playersRank[name] = 0;
+
 }
 
 Jumper::Jumper(const pair<int, int> &start, const pair<int, int> &end)
@@ -332,10 +341,22 @@ GameBoard::~GameBoard() = default;
 
 SNLGame::SNLGame(int boardSize, int diceSize, int noOfSnakes, int noOfLadders) : 
                             m_gameBoard(boardSize, noOfSnakes, noOfLadders), 
-                            m_dice(diceSize), m_stats()
+                            m_dice(diceSize), m_stats(new Statistics())
 {
     
 
+}
+
+void SNLGame::resetGame()
+{
+    for (auto it = m_players.begin(); it != m_players.end() ; ++it) 
+    {
+        Player &pl = *it;
+        pl.reset();
+    }
+     
+    m_stats->reset();
+    m_dice.reset();
 }
 
 SNLGame::~SNLGame() = default;
@@ -394,7 +415,8 @@ bool SNLGame::move(Player &currPlayer, int rollValue)
         shared_ptr<Jumper> Jumper = m_gameBoard.getJumperAt(finalPos);
 
         cout << "Encountered " << Jumper->getJumperType() << " at "
-             << "( " << finalPos.first << ", " << finalPos.second << endl;
+             << "( " << finalPos.first << ", " << finalPos.second << " )"
+             << endl;
 
         pair<int, int> endOfJumper = Jumper->getEnd();
         
@@ -442,6 +464,65 @@ bool SNLGame::moveAndCheck( bool &willSamePlayerPlayAgain, Player &currPlayer)
 
     return checkGameStatus(currPlayer);
 
+}
+
+static bool playerComparator(const Player &pl1, const Player &pl2)
+{
+    return (pl1.getScore() <= pl2.getScore());
+}
+
+void SNLGame::updateResultAndPrint(Player &pl)
+{
+    /* For this demo, The registered players don't change in each game.
+     * So, queue of m_players in this game and the list of players in statistics
+     * are same. But in real world the list of players in the statistics class
+     * would be a superset of the players in this game
+     * */
+
+    //do calculation for the local set of players of this game
+
+    for (auto it = m_players.begin(); it != m_players.end() ; it++) 
+    {
+        Player &pl = *it;
+        pair<int, int> posOfPlayer = pl.getPosition();
+        int score = (posOfPlayer.first) * m_gameBoard.getBoardSize() + 
+                    (posOfPlayer.second + 1);
+        pl.addScore(score);
+        updateStats(pl);
+    }
+
+    //sort local Result
+    sort(m_players.begin(), m_players.end(), playerComparator);
+
+    //print local result
+
+    cout << endl;
+    cout << "Game is over." << pl.getName() << " is the winner." << endl << endl; 
+    cout << "GAME SCORES" <<endl;
+    cout << "-----------" <<endl;
+
+    for (auto it = m_players.begin(); it != m_players.end(); ++it) {
+        cout << it->getName() << " : " << it->getScore() << endl;
+    }
+    
+    //update Statistics
+    m_stats->setHasChanged();
+
+}
+
+void SNLGame::updateStats(const Player &pl)
+{
+    m_stats->updateScore(pl);
+}
+
+void SNLGame::printStats() const
+{
+    m_stats->printStats();
+}
+
+void SNLGame::addPlayerForStats(const Player &pl)
+{
+    m_stats->registerPlayer(pl);
 }
 
 
