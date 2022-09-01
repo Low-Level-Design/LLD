@@ -109,6 +109,29 @@ public:
  * 
  */
 
+
+/**
+ * @brief Implements the 'print_stats' command of tic-tac-toe.
+ * 
+ */
+class MoveCommand : public CommandImpl
+{
+
+public:
+  explicit MoveCommand(ChessController &chessControl, const string &param);
+  ~MoveCommand();
+  bool execute() override;
+  void addPlayer(const Player &pl) 
+  {
+    m_player = pl;
+  }
+
+private:
+  string m_paramStr;
+  Player m_player;
+};
+
+
 class CommandFactory
 {
 
@@ -121,6 +144,7 @@ public:
   shared_ptr<CommandImpl> makeRegisterPlayerCommand(const string &param);
   shared_ptr<CommandImpl> makeStartGameCommand(const string &param);
   shared_ptr<CommandImpl> makePrintStatsCommand(const string &param);
+  shared_ptr<CommandImpl> makeMoveCommand(const string &param);
 
 private:
   typedef shared_ptr<CommandImpl> (CommandFactory::*FACTORY_PTMF)(

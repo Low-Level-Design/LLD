@@ -46,7 +46,12 @@ shared_ptr<CommandImpl> CommandFactory::makeCommand(const string &commandStr)
     createStr = commandStr;
   } else if (commandStr == "print_stats") {
     createStr = commandStr;
-  } else {
+  } else if (commandStr.find("move") != string::npos) {
+    size_t bpos = commandStr.find("(");
+    createStr = commandStr.substr(0, bpos + 1);
+
+  }
+  else {
     throw CommandImpl::InvalidCommandException(commandStr);
   }
 
@@ -59,6 +64,10 @@ shared_ptr<CommandImpl> CommandFactory::makeCommand(const string &commandStr)
       param =  "";
   } else if (createStr == "print_stats") {
       param =  "";
+  } else if (createStr == "move") {
+      size_t bpos = commandStr.find("(");
+      param = commandStr.substr(bpos+1, commandStr.length() - 1 -bpos);
+
   } else {
     //raise exception
     throw CommandImpl::InvalidCommandException(commandStr);
@@ -89,6 +98,7 @@ CommandFactory::CommandFactory(ChessController &gc) :
   m_commandMap["register_players"] = &CommandFactory::makeRegisterPlayerCommand;
   m_commandMap["start_game"] = &CommandFactory::makeStartGameCommand;
   m_commandMap["print_stats"] = &CommandFactory::makePrintStatsCommand;
+  m_commandMap["move"] = &CommandFactory::makeMoveCommand;
 }
 
 CommandFactory::~CommandFactory() = default;
@@ -150,6 +160,12 @@ shared_ptr<CommandImpl> CommandFactory::makePrintStatsCommand(
                                            const string &param)
 {
   return shared_ptr<CommandImpl>(new PrintStatsCommand(m_chessControl));
+}
+
+shared_ptr<CommandImpl> CommandFactory::makeMoveCommand(
+                                           const string &param)
+{
+  return shared_ptr<CommandImpl>(new MoveCommand(m_chessControl, param));
 }
 
 /**
@@ -290,6 +306,32 @@ bool PrintStatsCommand::execute()
 {
   //call handleRegister Player on the gamecontext
   return m_chessControl.printStats();
+}
+
+/**
+ * @brief Construct a new Print Stats Command:: Print Stats Command object.
+ * 
+ * @param tttContext Empty game context object.
+ */
+MoveCommand::MoveCommand(ChessController &chessControl, const string &param)
+    :CommandImpl(chessControl)
+{
+  m_paramStr = param;
+}
+
+MoveCommand::~MoveCommand() = default;
+
+/**
+ * @brief Implements how to execute print_stats command. Logic of
+ *        lmplementation lies with TttContext class.
+ * 
+ * @return true 
+ * @return false 
+ */
+bool MoveCommand::execute()
+{
+  //call handleRegister Player on the gamecontext
+  return m_chessControl.move(m_paramStr, m_player);
 }
 
 #endif

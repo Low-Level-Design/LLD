@@ -10,7 +10,8 @@
 *  
 */
 
-//#include "src/Tictactoe.h"
+#include "game/Chess.h"
+#include "ChessViewer.h"
 #include <memory>
 
 using namespace std;
@@ -23,17 +24,23 @@ using namespace std;
 
 class ChessController
 {
+
 public:
   ChessController();
   ~ChessController();
   bool registerPlayer();
   bool startGame();
   bool printStats() const;
-
-
+  bool move(const string &param, const Player &pl);
 
 private:
-  //shared_ptr<TttGame> tttGame; /**< Reference to tttGame object. */
+
+  void extractMoveCoordinates(const string &paramStr, CellPosition &start, 
+                               CellPosition &end);
+
+
+  shared_ptr<ChessGame> m_chessGame; /**< Reference to ChessGame object. */
+  shared_ptr<ChessViewer> m_gameViewer;
 };
 
 #endif
