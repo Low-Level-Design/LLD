@@ -1,0 +1,10 @@
+Complete some of checks of start_game: (optional)
+	- 'Check' of playing player
+	- 'Check' of target player
+	- 'Checkmate'
+	- 'Stalemate'
+
+GUI correction
+Error and exception handling
+Documentation and code cleanup/memory cleanup
+Readme documentation and UML diagrams
